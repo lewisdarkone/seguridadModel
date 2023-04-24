@@ -1,0 +1,6 @@
+﻿<MudIconButton Icon="fa-solid fa-xmark" Variant="Variant.Filled" Color="Color.Error" OnClick="(e => OnClick.InvokeAsync())" />
+
+@code {
+    [Parameter]
+    public EventCallback<bool> OnClick { get; set; }
+}

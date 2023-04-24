@@ -1,0 +1,13 @@
+{
+  "MailSettings": {
+    "DisplayName": "Muvany",
+    "From": "",
+    "Host": "",
+    "Password": "",
+    "Port": 587,
+    "UserName": "",
+    "RedirectServer": "http://localhost:7290/"
+    //"MiddlewareCommon": "http://45.61.184.27:8082/api/Correos/EnvioCorreoGenerico"
+
+  }
+}

@@ -1,0 +1,39 @@
+﻿@using com.softpine.muvany.component.Components.Generals
+@using com.softpine.muvany.component.Forms;
+@using com.softpine.muvany.component.States;
+@using com.softpine.muvany.component.Tools;
+@using com.softpine.muvany.models.DTOS;
+@inherits CreateEditRecursosState
+
+<MudDialog @bind-IsVisible="DialogVisible">
+    <DialogContent>
+        <ProgressLineComponent ShowLoading="@StaticValues.IsLoading"/>
+        <ConfirmActionDialog ShowDialog="@ShowConfirmDialog" OnConfirm="OnSave" OnCancel="CancelConfirmSave" />
+        <MudForm @ref="Form" Model="EditForm" @bind-IsValid="@Success" @bind-Errors="@Errors" Validation="@(Validator.ValidateValue)" ValidationDelay="0">
+            <MudTextField @bind-Value="EditForm.Nombre" Label="Nombre" For="@(() => EditForm.Nombre)" Immediate="true" />
+            @if (Modulos != null)
+            {
+                <MudSelect T="ModulosDto" Label="Modulo padre" AnchorOrigin="Origin.BottomCenter" Value="@EditForm.Modulo" ValueChanged="OnSelectItem">
+                @*ValueChanged="OnSelectItem">*@
+                    <MudSelectItem Value="@ModuloNull">@ModuloNull.Nombre</MudSelectItem>
+                    @foreach (var modulo in Modulos)
+                    {
+                        <MudSelectItem Value="@modulo">@modulo.Nombre</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+            <MudSwitch @bind-Checked="EditForm.EsMenuConfiguracion" Label="Mostrar en menú" LabelPosition="LabelPosition.Start" Color="Color.Primary" />
+            @if (EditForm.EsMenuConfiguracion)
+            {
+                <MudTextField @bind-Value="EditForm.DescripcionMenuConfiguracion" Label="Nombre en menú" For="@(() => EditForm.DescripcionMenuConfiguracion)" Immediate="true" />
+                <MudTextField @bind-Value="EditForm.Url" Label="URL" For="@(() => EditForm.Url)" Immediate="true" />
+            }
+            
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        @*<MudIconButton Icon="fa-solid fa-floppy-disk" Variant="Variant.Filled" Color="Color.Success" OnClick="Create"> </MudIconButton>*@
+        <SaveIconButtonComponent OnClick="ConfirmSave" Disable="StaticValues.IsLoading" />
+        <CencelIconButtonComponent OnClick="Cancel"  />
+    </DialogActions>
+</MudDialog>

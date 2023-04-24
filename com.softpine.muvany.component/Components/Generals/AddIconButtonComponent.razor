@@ -1,0 +1,9 @@
+﻿<MudIconButton Icon="fa-regular fa-square-plus" Variant="Variant.Filled" Color="Color.Primary" OnClick="(e => OnClick.InvokeAsync())" Disabled="Disable" />
+
+@code {
+    [Parameter]
+    public EventCallback<bool> OnClick { get; set; }
+
+    [Parameter]    
+    public bool Disable { get; set; }
+}

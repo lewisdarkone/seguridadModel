@@ -1,0 +1,13 @@
+﻿[
+   {
+      "SchemaName": "dbo",
+      "Tables": [
+         {
+            "Columns": [ ],
+            "Name": "Uvw_UsuariosDominio",
+            "NewName": "UvwUsuariosDominio"
+         }
+      ],
+      "UseSchemaName": false
+   }
+]

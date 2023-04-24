@@ -1,0 +1,21 @@
+﻿@using com.softpine.muvany.component.Components.Generals
+@using com.softpine.muvany.component.Forms;
+@using com.softpine.muvany.component.States;
+@using com.softpine.muvany.component.Tools;
+@using com.softpine.muvany.models.DTOS;
+
+@inherits CreateEditAccionesState
+
+<MudDialog @bind-IsVisible="DialogVisible">
+    <DialogContent>
+        <ProgressLineComponent ShowLoading="@StaticValues.IsLoading"/>
+        <ConfirmActionDialog ShowDialog="@ShowConfirmDialog" OnConfirm="OnSave" OnCancel="CancelConfirmSave" />
+        <MudForm @ref="Form" Model="EditForm" @bind-IsValid="@Success" @bind-Errors="@Errors" Validation="@(Validator.ValidateValue)" ValidationDelay="0">
+            <MudTextField @bind-Value="EditForm.Nombre" Label="Nombre" For="@(() => EditForm.Nombre)" Immediate="true" />
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <SaveIconButtonComponent OnClick="ConfirmSave" Disable="StaticValues.IsLoading" />
+        <CencelIconButtonComponent OnClick="Cancel"  />
+    </DialogActions>
+</MudDialog>

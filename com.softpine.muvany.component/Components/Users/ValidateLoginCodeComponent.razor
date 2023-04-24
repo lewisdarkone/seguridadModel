@@ -1,0 +1,36 @@
+﻿@using com.softpine.muvany.component.Components.Generals
+@using com.softpine.muvany.component.Forms;
+@using com.softpine.muvany.component.States.User;
+@using com.softpine.muvany.component.States;
+@using com.softpine.muvany.component.Tools;
+
+@inherits ValidateLoginCodeState
+
+@if (StaticValues.IsLoading)
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+}
+<MudText Typo="Typo.h6">@validateCodeForm.NombreCompleto, Valide su código de acceso enviado por correo o sms</MudText>
+
+<MudCard>
+    <MudForm @ref="Form" Model="validateCodeForm" @bind-IsValid="@Success" @bind-Errors="@Errors" Validation="@(validateCodeFormValidator.ValidateValue)" ValidationDelay="0">
+        <MudCardContent>
+            <MudTextField @bind-Value="validateCodeForm.Email" Label="Email" For="@(() => validateCodeForm.Email)" ReadOnly="true" />
+            <MudTextField @bind-Value="validateCodeForm.Code" Label="Código de validación" For="@(() => validateCodeForm.Code)" Immediate="true" />
+        </MudCardContent>
+    </MudForm>
+    <MudCardActions>
+        <MudIconButton Variant="Variant.Filled" Class="ml-auto" Color="Color.Primary" DisableElevation="true" OnClick="ValidateCode">Validar</MudIconButton>
+        <CencelIconButtonComponent OnClick="@OnCancel" />
+    </MudCardActions>
+</MudCard>
+
+@code {
+    string Email = "";
+    bool Success;
+    string[] Errors = { };
+    string Contrasena = "";
+    MudForm Form;
+
+
+}

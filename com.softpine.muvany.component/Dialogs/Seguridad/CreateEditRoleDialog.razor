@@ -1,0 +1,44 @@
+﻿@using com.softpine.muvany.component.Components.Generals
+@using com.softpine.muvany.component.Forms;
+@using com.softpine.muvany.component.States;
+@using com.softpine.muvany.component.Tools;
+@using com.softpine.muvany.models.DTOS;
+
+@inherits CreateEditRolesState
+
+
+    <MudDialog @bind-IsVisible="DialogVisible">
+        <DialogContent>
+            <ProgressLineComponent ShowLoading="@StaticValues.IsLoading" />
+            <ConfirmActionDialog ShowDialog="@ShowConfirmDialog" OnConfirm="OnSave" OnCancel="CancelConfirmSave" />
+            <MudForm @ref="Form" Model="EditForm" @bind-IsValid="@Success" @bind-Errors="@Errors" Validation="@(Validator.ValidateValue)" ValidationDelay="0">
+                <MudTextField @bind-Value="EditForm.Name" Label="Nombre" For="@(() => EditForm.Name)" Immediate="true" />
+                <MudTextField @bind-Value="EditForm.Description" Label="Descripcion" For="@(() => EditForm.Description)" Immediate="true" />
+                <MudSwitch @bind-Checked="EditForm.RolInterno" Label="Rol Interno" LabelPosition="LabelPosition.Start" Color="Color.Primary" />
+            </MudForm>
+            <MudStack Justify="Justify.Center">
+                <MudText Typo="Typo.h6" Color="Color.Primary" Align="Align.Start">Permisos</MudText>
+                @if (PermisosDisponibles != null)
+                {
+                    <MudSelect T="PermisosDto" 
+                        MultiSelection="true" 
+                        MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))" 
+                        @bind-Value="SelectedPermiso" 
+                        @bind-SelectedValues="PermisosAsignados" 
+                        AdornmentIcon="@Icons.Material.Filled.Search">
+
+                        @foreach (var cp in PermisosDisponibles)
+                        {
+                            <MudSelectItem T="PermisosDto" Value="cp">@cp.Descripcion</MudSelectItem>
+                        }
+                    </MudSelect>
+                }
+            </MudStack>
+        </DialogContent>
+        <DialogActions>
+            <SaveIconButtonComponent OnClick="ConfirmSave" Disable="StaticValues.IsLoading" />
+            <CencelIconButtonComponent OnClick="Cancel" />
+        </DialogActions>
+    </MudDialog>
+
+

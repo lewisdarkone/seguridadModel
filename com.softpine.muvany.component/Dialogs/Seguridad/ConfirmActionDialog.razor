@@ -1,0 +1,41 @@
+﻿
+
+<MudDialog @bind-IsVisible="ShowDialog">
+    <DialogContent>
+        <div class="d-flex flex-column align-center">
+            <MudIcon Icon="fa-solid fa-triangle-exclamation" Color="Color.Warning" />
+            <MudText Typo="Typo.h6">La información se actualizará en el servidor</MudText>
+            <MudText Typo="Typo.subtitle1">Por favor confirmar que deseas continuar</MudText>
+        </div>        
+    </DialogContent>
+    <DialogActions>
+        <MudIconButton Icon="fa-solid fa-check" Variant="Variant.Filled" Color="Color.Success" OnClick="(e => ConfirmAction(true))" />
+        <MudIconButton Icon="fa-solid fa-xmark" Variant="Variant.Filled" Color="Color.Error" OnClick="(e => ConfirmAction(false))" />
+    </DialogActions>
+</MudDialog>
+
+@code{
+
+    [Parameter]
+    public bool ShowDialog { get; set; }
+
+    [Parameter]
+    public EventCallback OnConfirm { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+    }
+
+    async Task ConfirmAction(bool Success)
+    {
+        if (Success) await OnConfirm.InvokeAsync();
+        else await OnCancel.InvokeAsync();
+
+        ShowDialog = false;
+        StateHasChanged();
+    }
+}

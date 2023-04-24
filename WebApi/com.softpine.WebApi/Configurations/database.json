@@ -1,0 +1,10 @@
+{
+  "DatabaseSettings": {
+    "DBProvider": "mysql",
+    "ConnectionString": "Server=localhost;Database=db;user id=user;password=pwd;",
+    "ConnectionStringDBLogs": "Server=server\\SQLEXPRESS;Database=DBLogs;user id=user;password=pwd;",
+    "ConnectionStringSQLServer": "Server=server;Database=CollectionMessaging;user id=user;password=pwd;MultipleActiveResultSets=true;",
+    "ConnectionStringMongoDb": "mongodb://localhost:27017",
+    "SuscripcionDatabase": "SuscripcionDB"
+  }
+}

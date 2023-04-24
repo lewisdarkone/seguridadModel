@@ -1,0 +1,43 @@
+﻿@using com.softpine.muvany.component.Components.Generals
+@using com.softpine.muvany.component.Forms;
+@using com.softpine.muvany.component.States;
+@using com.softpine.muvany.component.Tools;
+@using com.softpine.muvany.models.DTOS;
+@inherits CreateEditEndpointState
+
+<MudDialog @bind-IsVisible="DialogVisible">
+    <DialogContent>
+        <ProgressLineComponent ShowLoading="@StaticValues.IsLoading"/>
+        <ConfirmActionDialog ShowDialog="@ShowConfirmDialog" OnConfirm="OnSave" OnCancel="CancelConfirmSave" />
+        <MudForm @ref="Form" Model="EditForm" @bind-IsValid="@Success" @bind-Errors="@Errors" Validation="@(Validator.ValidateValue)" ValidationDelay="0">
+            <MudTextField @bind-Value="EditForm.Nombre" Label="Nombre" For="@(() => EditForm.Nombre)" Immediate="true" />
+            <MudTextField @bind-Value="EditForm.Controlador" Label="Controlador" For="@(() => EditForm.Controlador)" Immediate="true" />
+            <MudTextField @bind-Value="EditForm.Metodo" Label="Método" For="@(() => EditForm.Metodo)" Immediate="true" />
+                
+            <MudSelect T="string" Label="Verbo" AnchorOrigin="Origin.BottomCenter" Value="@EditForm.HttpVerbo" ValueChanged="OnSelectVerbo">
+                @*ValueChanged="OnSelectItem">*@
+                @foreach (var verbo in Verbos)
+                {
+                    <MudSelectItem Value="@verbo">@verbo</MudSelectItem>
+                }
+            </MudSelect>
+            @if (Permisos != null)
+            {
+                <MudSelect T="PermisosDto" Label="Permiso" AnchorOrigin="Origin.BottomCenter" Value="@EditForm.Permiso" ValueChanged="OnSelectPermiso">
+                @*ValueChanged="OnSelectItem">*@
+                    @foreach (var permiso in Permisos)
+                    {
+                        <MudSelectItem Value="@permiso">@permiso.Descripcion</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+            <MudSwitch @bind-Checked="EditForm.Estado" Label="Activo" LabelPosition="LabelPosition.Start" Color="Color.Primary" />            
+            
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        @*<MudIconButton Icon="fa-solid fa-floppy-disk" Variant="Variant.Filled" Color="Color.Success" OnClick="Create"> </MudIconButton>*@
+        <SaveIconButtonComponent OnClick="ConfirmSave" Disable="StaticValues.IsLoading" />
+        <CencelIconButtonComponent OnClick="Cancel"  />
+    </DialogActions>
+</MudDialog>

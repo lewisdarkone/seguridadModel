@@ -1,0 +1,18 @@
+﻿[
+   {
+      "SchemaName": "dbo",
+      "Tables": [
+         {
+            "Columns": [ ],
+            "Name": "spCargarFacturaTasacionSolicitadaParaValoracion",
+            "NewName": "spCargarFacturaTasacionSolicitadaParaValoracion"
+         },
+         {
+            "Columns": [ ],
+            "Name": "sp_CargarReservasBAS_TemplateAutorizadasXSuplidor",
+            "NewName": "sp_CargarReservasBAS_TemplateAutorizadasXSuplidor"
+         }
+      ],
+      "UseSchemaName": false
+   }
+]

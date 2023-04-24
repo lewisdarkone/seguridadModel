@@ -1,0 +1,38 @@
+﻿@using com.softpine.muvany.component.Components.Generals
+@using com.softpine.muvany.component.States.User;
+@using com.softpine.muvany.component.Tools;
+
+@inherits UserProfileState
+
+@if (StaticValues.IsLoading)
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+}
+<MudText Typo="Typo.h6">Mi perfil</MudText>
+
+<MudCard>
+    <MudForm @ref="Form" Model="UserProfileForm" @bind-IsValid="@Success" @bind-Errors="@Errors" Validation="@(Validator.ValidateValue)" ValidationDelay="0">
+        <MudCardContent>
+            <MudTextField @bind-Value="UserProfileForm.UserName" Label="Usuario" For="@(() => UserProfileForm.UserName)" ReadOnly="true" />
+            <MudTextField @bind-Value="UserProfileForm.Email" Label="Email" For="@(() => UserProfileForm.Email)" ReadOnly="true" />
+            <MudTextField @bind-Value="UserProfileForm.NombreCompleto" Label="Nombres" For="@(() => UserProfileForm.NombreCompleto)" ReadOnly="true" />
+            <MudTextField @bind-Value="UserProfileForm.PhoneNumber" Label="Telefono" For="@(() => UserProfileForm.PhoneNumber)" Immediate="true" />
+            <MudSwitch @bind-Checked="UserProfileForm.TwoFactorEnable" Label="Doble Factor Autenticación" LabelPosition="LabelPosition.Start" Color="Color.Primary" />
+            <MudButton Variant="Variant.Text" OnClick="@GoToReset">Cambiar Contraseña</MudButton>
+        </MudCardContent>
+    </MudForm>
+    <MudCardActions>
+        <MudIconButton Variant="Variant.Filled" Class="ml-auto" Color="Color.Primary" DisableElevation="true" OnClick="UpdateProfile">Guardar</MudIconButton>
+        <CencelIconButtonComponent OnClick="@OnCancel" />
+    </MudCardActions>
+</MudCard>
+
+@code {
+    string Email = "";
+    bool Success;
+    string[] Errors = { };
+    string Contrasena = "";
+    MudForm Form;
+
+
+}

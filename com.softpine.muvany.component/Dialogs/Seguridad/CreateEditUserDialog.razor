@@ -1,0 +1,56 @@
+﻿@using com.softpine.muvany.component.Components.Generals
+@using com.softpine.muvany.component.Forms;
+@using com.softpine.muvany.component.States;
+@using com.softpine.muvany.component.Tools;
+@using com.softpine.muvany.models.DTOS;
+
+@inherits CreateEditUsuariosState
+
+
+<MudDialog @bind-IsVisible="DialogVisible">
+    <DialogContent>
+        <ProgressLineComponent ShowLoading="@StaticValues.IsLoading" />
+        <ConfirmActionDialog ShowDialog="@ShowConfirmDialog" OnConfirm="OnSave" OnCancel="CancelConfirmSave" />
+        <MudForm @ref="Form" Model="EditForm" @bind-IsValid="@Success" @bind-Errors="@Errors" Validation="@(Validator.ValidateValue)" ValidationDelay="0">
+            <MudTextField @bind-Value="EditForm.Email" Label="Email" For="@(() => EditForm.Email)" Immediate="true" />
+            <MudTextField @bind-Value="EditForm.FullName" Label="Nombre Completo" For="@(() => EditForm.FullName)" Immediate="true" />
+            <MudTextField @bind-Value="EditForm.PhoneNumber" Label="Telefono" For="@(() => EditForm.PhoneNumber)" Immediate="true" />
+        </MudForm>
+        <MudStack Justify="Justify.Center">
+            <MudText Typo="Typo.h6" Color="Color.Primary" Align="Align.Start">Roles</MudText>
+            @if (Roles != null)
+            {
+                if (IsUpdate)
+                {
+                    <MudSelect T="RoleDto" 
+                        MultiSelection="true" 
+                        MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))" 
+                        @bind-Value="SelectedRole" 
+                        @bind-SelectedValues="RolesAsignados" 
+                        AdornmentIcon="@Icons.Material.Filled.Search">
+                        @foreach (var cp in Roles)
+                        {
+                            <MudSelectItem T="RoleDto" Value="cp">@cp.Name (@cp.TypeRolDescription)</MudSelectItem>
+                        }
+                    </MudSelect>
+                }
+                else
+                {
+                    <MudSelect T="RoleDto" MultiSelection="false" @bind-Value="SelectedRole" >
+                        @foreach (var cp in Roles)
+                        {
+                            <MudSelectItem T="RoleDto" Value="cp">@cp.Name (@cp.TypeRolDescription)</MudSelectItem>
+                        }
+                    </MudSelect>
+                }
+
+            }
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <SaveIconButtonComponent OnClick="ConfirmSave" Disable="StaticValues.IsLoading" />
+        <CencelIconButtonComponent OnClick="Cancel" />
+    </DialogActions>
+</MudDialog>
+
+

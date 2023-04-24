@@ -1,0 +1,46 @@
+﻿@using com.softpine.muvany.component.Components.Generals
+@using com.softpine.muvany.component.Forms;
+@using com.softpine.muvany.component.States;
+@using com.softpine.muvany.component.Tools;
+@using com.softpine.muvany.models.DTOS;
+
+@inherits CreateEditPermisosState
+
+<MudDialog @bind-IsVisible="DialogVisible">
+    <DialogContent>
+        <ProgressLineComponent ShowLoading="@StaticValues.IsLoading"/>
+        <ConfirmActionDialog ShowDialog="@ShowConfirmDialog" OnConfirm="OnSave" OnCancel="CancelConfirmSave" />
+        @if (!StaticValues.IsLoading)
+        {
+            <MudForm @ref="Form" Model="EditForm" @bind-IsValid="@Success" @bind-Errors="@Errors" Validation="@(Validator.ValidateValue)" ValidationDelay="0">
+                
+                @if (Acciones != null)
+                {
+                    <MudSelect T="AccionesDto" Label="Acción" AnchorOrigin="Origin.BottomCenter" Value="@EditForm.Accion" ValueChanged="OnSelectItemAccion">                        
+                        @foreach (var accion in Acciones)
+                        {
+                            <MudSelectItem Value="@accion">@accion.Nombre</MudSelectItem>
+                        }
+                    </MudSelect>
+                }
+
+                @if (recursos != null)
+                {
+                    <MudSelect T="RecursosDto" Label="Recurso" AnchorOrigin="Origin.BottomCenter" Value="@EditForm.Recurso" ValueChanged="OnSelectItemRecurso">
+                        @foreach (var recurso in recursos)
+                        {
+                            <MudSelectItem Value="@recurso">@recurso.Nombre</MudSelectItem>
+                        }
+                    </MudSelect>
+                }
+                
+                <MudSwitch @bind-Checked="EditForm.EsBasico" Label="Básico" LabelPosition="LabelPosition.Start" Color="Color.Primary" />               
+
+            </MudForm>
+        }        
+    </DialogContent>
+    <DialogActions>
+        <SaveIconButtonComponent OnClick="ConfirmSave" Disable="StaticValues.IsLoading" />
+        <CencelIconButtonComponent OnClick="Cancel"  />
+    </DialogActions>
+</MudDialog>

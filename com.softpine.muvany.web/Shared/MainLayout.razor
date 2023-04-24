@@ -1,0 +1,51 @@
+﻿@using com.softpine.muvany.component.Components.Generals
+@using com.softpine.muvany.component.Tools;
+@inject NavigationManager navigationNav
+@inject ILocalStorageService localStorage
+
+@inherits LayoutComponentBase
+
+<div class="page">
+    <div class="PageContent">
+
+        <MudThemeProvider />
+        <MudDialogProvider FullWidth="true"
+                           MaxWidth="MaxWidth.ExtraSmall"
+                           CloseButton="true"
+                           CloseOnEscapeKey="true"
+                           DisableBackdropClick="true"
+                           NoHeader="true"
+                           Position="DialogPosition.Center" />
+        <MudSnackbarProvider />
+
+
+
+
+        @if (!string.IsNullOrEmpty(token) && navigationNav.Uri != navigationNav.BaseUri)
+        {
+                @*<NavMenu />*@
+                @*<LeftMenuComponent />*@
+                <DrawerMenuComponent />
+        }
+
+        @*@if (!string.IsNullOrEmpty(token) && navigationNav.Uri != navigationNav.BaseUri)
+        {
+        <div class="top-row px-4">
+        <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
+        }*@
+        <MudContainer MaxWidth="MaxWidth.Small">
+            @Body
+        </MudContainer>
+    </div>
+</div>
+@code {
+    string token = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        token = await localStorage.GetItemAsync<string>(LocalStorageValueKey.USERTOKEN);
+        //await devicePermissions.LocalStorateReadPermission();
+        //await devicePermissions.LocalStorateWritePermission();
+    }
+}

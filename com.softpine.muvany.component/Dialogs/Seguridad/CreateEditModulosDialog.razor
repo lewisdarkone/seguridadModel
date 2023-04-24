@@ -1,0 +1,38 @@
+﻿@using com.softpine.muvany.component.Components.Generals
+@using com.softpine.muvany.component.Forms;
+@using com.softpine.muvany.component.States;
+@using com.softpine.muvany.component.Tools;
+@using com.softpine.muvany.models.DTOS;
+
+@inherits CreateEditModulosState
+
+<MudDialog @bind-IsVisible="DialogVisible">
+    <DialogContent>
+        <ProgressLineComponent ShowLoading="@StaticValues.IsLoading"/>
+        <ConfirmActionDialog ShowDialog="@ShowConfirmDialog" OnConfirm="OnSave" OnCancel="CancelConfirmSave" />
+        <MudForm @ref="Form" Model="EditForm" @bind-IsValid="@Success" @bind-Errors="@Errors" Validation="@(Validator.ValidateValue)" ValidationDelay="0">
+            <MudTextField @bind-Value="EditForm.Nombre" Label="Nombre" For="@(() => EditForm.Nombre)" Immediate="true" />
+            @if (Modulos != null)
+            {
+                <MudSelect T="ModulosDto" Label="Modulo padre" AnchorOrigin="Origin.BottomCenter" Value="@EditForm.ModuloPadreNav" ValueChanged="OnSelectItem">
+                    <MudSelectItem Value="@ModuloNull">@ModuloNull.Nombre</MudSelectItem>
+                    @foreach (var modulo in Modulos)
+                    {
+                        <MudSelectItem Value="@modulo">@modulo.Nombre</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+            <MudTextField @bind-Value="EditForm.CssIcon" Label="Icono" For="@(() => EditForm.CssIcon)" Immediate="true" />
+            
+            @if (IsUpdate)
+            {
+                <MudSwitch @bind-Checked="EditForm.Estado" Label="Activo" LabelPosition="LabelPosition.Start" Color="Color.Primary" />
+            }
+            
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <SaveIconButtonComponent OnClick="ConfirmSave" Disable="StaticValues.IsLoading" />
+        <CencelIconButtonComponent OnClick="Cancel"  />
+    </DialogActions>
+</MudDialog>

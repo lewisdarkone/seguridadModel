@@ -1,0 +1,52 @@
+﻿@using com.softpine.muvany.component.Components.Generals
+@using com.softpine.muvany.component.Dialogs
+@using com.softpine.muvany.component.Tools;
+@using com.softpine.muvany.models.DTOS;
+@using com.softpine.muvany.component.States;
+@using com.softpine.muvany.component.Dialogs.Seguridad
+
+@inherits MainUsuariosState
+
+
+<ProgressLineComponent ShowLoading="@StaticValues.IsLoading"/>
+<div class="PageContent">
+<CreateEditUserDialog DialogVisible="ShowCreateDialog" ItemToEdit="SelectedItem" DataUpdate="IsDataUpdated" />
+<MudPaper Elevation="1" Style="padding-bottom:15px;margin-bottom:5px;">
+    <MudToolBar>
+        <MudStack Row="true">
+            <MudText Typo="Typo.h5">Usuarios</MudText>
+            <AddIconButtonComponent OnClick="AddNew" />
+        </MudStack>
+        <MudSpacer />
+        <MudTextField AdornmentIcon="@Icons.Material.Filled.Search"
+                      @bind-Value="SearchValue"
+                      Placeholder="Search"
+                      Adornment="Adornment.Start"
+                      DebounceInterval="1000"
+                      OnDebounceIntervalElapsed="Search"
+                      Immediate="true"
+                      HelperText="Busca Usuarios por su nombre"
+                      Class="mt-0" />
+    </MudToolBar>
+</MudPaper>
+@if (ListItems != null && ListItems.Count > 0)
+{
+    foreach (var user in ListItems)
+    {
+        <MudCard Elevation="5" Outlined="true" Style="margin-bottom:5px;" >
+            <div onclick="@(() => ShowEditCreate(user))">
+            <MudCardContent>
+                    <MudText Typo="Typo.h6">@user.NombreCompleto</MudText>
+                    <MudText Typo="Typo.body2">Roles: @user.Roles.Count</MudText>
+                <MudText>@user.RolesToString()</MudText>
+            </MudCardContent>
+            </div>
+            <MudCardActions>
+                <MudSwitch T="bool" Checked="@user.IsActive" Label="Activo" CheckedChanged="(async (e) => await ActivateToggle(e,user))" LabelPosition="LabelPosition.Start" Color="Color.Primary" />
+            </MudCardActions>
+        </MudCard>
+    }
+}
+    <MudPagination Variant="Variant.Filled" Count="@StaticValues.TotalPages" SelectedChanged="@PageChanged" />
+</div>
+

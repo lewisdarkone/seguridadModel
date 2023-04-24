@@ -1,0 +1,50 @@
+﻿@using com.softpine.muvany.component.States;
+@inherits MenuState
+
+
+<MudPaper Width="250px" Class="py-13" Elevation="0">
+    <MudNavMenu>
+        <MudText Typo="Typo.h6" Class="px-4">@Company</MudText>
+        <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">@UserName</MudText>
+        <MudDivider Class="my-2" />
+        @*Navegar entre los diferentes Menues*@
+        @*<MudNavLink Href="/mantseguridad/recursos">Recursos</MudNavLink>*@
+        @if (RecursosMenu != null && RecursosMenu.Count > 0)
+        {
+            foreach (var Father in RecursosMenu)
+            {
+                if (Father.Recursos != null)
+                {
+                    <MudNavGroup IconColor="Color.Primary" Icon="@Father.Cssicon" Title="@Father.Nombre" Expanded="true">
+                        @if (Father.Recursos != null)
+                        {
+                           @foreach (var hijo in Father.Recursos)
+                            {
+                                if (hijo.Recursos != null)
+                                {
+                                    <MudNavGroup IconColor="Color.Primary" Icon="@hijo.Cssicon" Title="@hijo.Nombre" Expanded="true">
+                                        @if (hijo.Recursos != null)
+                                        {
+                                            @foreach(var nieto in hijo.Recursos)
+                                            {
+                                                <MudNavLink Href="@nieto.URL">@nieto.Nombre</MudNavLink>
+                                            }
+                                        }
+                                    </MudNavGroup>
+                                }else
+                                {
+                                    <MudNavLink Href="@hijo.URL">@hijo.Nombre</MudNavLink>
+                                }
+
+                            }
+                        }
+                    </MudNavGroup>
+                }
+                else
+                {
+                    <MudNavLink Href="@Father.URL">@Father.Nombre</MudNavLink>
+                }
+            }
+        }
+    </MudNavMenu>
+</MudPaper>

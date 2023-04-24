@@ -1,0 +1,17 @@
+﻿@using com.softpine.muvany.component.Tools;
+@if (loading)
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+}
+
+@code{
+    bool loading = false;
+
+    [Parameter]
+    public bool ShowLoading { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        loading = ShowLoading;
+    }
+}

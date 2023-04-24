@@ -1,0 +1,38 @@
+﻿@using com.softpine.muvany.component.Components.Generals
+@using com.softpine.muvany.component.Dialogs.Seguridad
+@using com.softpine.muvany.component.States;
+@using com.softpine.muvany.component.Tools;
+
+
+
+@inherits LoginState
+
+
+<div class="PageContent">
+<ProgressLineComponent ShowLoading="@StaticValues.IsLoading" />
+<ForgotPasswordDialog DialogVisible="@ShowForgotDialog" Sent="@OnForgotAction" />
+
+<h1>Muvany</h1>
+
+Register, manage and move anything you want
+
+<MudCard Style="justify-items:flex-start;">
+    <MudCardContent>
+        <MudForm @ref="Form" Model="NewLoginForm" @bind-IsValid="@Success" @bind-Errors="@Errors" Validation="@(Validator.ValidateValue)" ValidationDelay="0">
+            <MudTextField @bind-Value="NewLoginForm.Email" Label="Email" For="@(() => NewLoginForm.Email)" Immediate="true" />
+            <MudTextField @bind-Value="NewLoginForm.Contrasena" Label="Contraseña" InputType="InputType.Password" For="@(() => NewLoginForm.Contrasena)" Immediate="true" />
+        </MudForm>
+        <MudStack Class="pa-4 mt-4">
+            <MudIconButton Icon="fa-solid fa-right-to-bracket" Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => Login(true))"></MudIconButton>
+            <MudSwitch @bind-Checked="Recuerdame" Label="Recuerdame" LabelPosition="LabelPosition.Start" Color="Color.Primary" />
+            <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="ForgotPassword"><i class="fa-solid fa-arrows-rotate"></i> Reiniciar Clave</MudButton>
+        </MudStack>
+    </MudCardContent>
+    <MudCardActions >
+        <MudPaper Class="pa-4 mt-4">
+            <MudText>Aún no tienes cuenta en Muvany?</MudText>
+            <MudButton Variant="Variant.Filled" Class="ml-auto" Color="Color.Secondary" DisableElevation="true" OnClick="GoRegister">Crear Cuenta</MudButton>
+        </MudPaper>
+    </MudCardActions>    
+</MudCard>
+</div>

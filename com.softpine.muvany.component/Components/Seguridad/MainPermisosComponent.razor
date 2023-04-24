@@ -1,0 +1,50 @@
+﻿@using com.softpine.muvany.component.Components.Generals
+@using com.softpine.muvany.component.Dialogs
+@using com.softpine.muvany.component.Tools;
+@using com.softpine.muvany.models.DTOS;
+@using com.softpine.muvany.component.States;
+@using com.softpine.muvany.component.Dialogs.Seguridad
+
+@inherits MainPermisosState
+
+<div class="PageContent">
+    <ProgressLineComponent ShowLoading="@StaticValues.IsLoading" />
+    <CreateEditPermisosDialog DialogVisible="ShowCreateDialog" ItemToEdit="SelectedItem" DataUpdate="IsDataUpdated" />
+    <ProgressLineComponent ShowLoading="@StaticValues.IsLoading" />
+    <CreateEditPermisosDialog DialogVisible="ShowCreateDialog" ItemToEdit="SelectedItem" DataUpdate="IsDataUpdated" />
+    <MudPaper Elevation="1" Style="padding-bottom:15px;margin-bottom:5px;">
+        <MudToolBar>
+            <MudStack Row="true">
+                <MudText Typo="Typo.h5">Permisos</MudText>
+                <AddIconButtonComponent OnClick="AddNew" />
+            </MudStack>
+            <MudSpacer />
+            <MudTextField AdornmentIcon="@Icons.Material.Filled.Search"
+                          @bind-Value="SearchValue"
+                          Placeholder="Search"
+                          Adornment="Adornment.Start"
+                          DebounceInterval="1000"
+                          OnDebounceIntervalElapsed="Search"
+                          Immediate="true"
+                          HelperText="Busca Permiso por su nombre"
+                          Class="mt-0" />
+        </MudToolBar>
+    </MudPaper>
+    @if (ListItems != null && ListItems.Count > 0)
+    {
+        foreach (var item in ListItems)
+        {
+            <MudCard Elevation="5" Outlined="true" Style="margin-bottom:5px;">
+                <div onclick="@(() => ShowEditCreate(item))">
+                    <MudCardContent>
+                        <MudText Typo="Typo.h6">@item.Descripcion</MudText>
+                        <MudText Typo="Typo.body2">Acción: @item.AccionNombre</MudText>
+                        <MudText Typo="Typo.body2">Recurso: @item.RecursoNombre</MudText>
+                        <MudSwitch T="int?" Checked="@item.EsBasico" Label="Básico" ReadOnly="true" LabelPosition="LabelPosition.Start" Color="Color.Primary" />
+                    </MudCardContent>
+                </div>
+            </MudCard>
+        }
+    }
+    <MudPagination Variant="Variant.Filled" Count="@StaticValues.TotalPages" SelectedChanged="@PageChanged" />
+</div>

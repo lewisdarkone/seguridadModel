@@ -1,0 +1,35 @@
+﻿@using com.softpine.muvany.component.States.User;
+@using com.softpine.muvany.component.Tools;
+
+@inherits RegisterUserState
+
+@if (StaticValues.IsLoading)
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+}
+<h3>RegisterUserComponent</h3>
+
+<MudCard>
+    <MudForm @ref="Form" Model="RegisterUserForm" @bind-IsValid="@Success" @bind-Errors="@Errors" Validation="@(Validator.ValidateValue)" ValidationDelay="0">
+        <MudCardContent>
+            <MudTextField @bind-Value="RegisterUserForm.Email" Label="Email" For="@(() => RegisterUserForm.Email)" Immediate="true" />
+            <MudTextField @bind-Value="RegisterUserForm.FirstName" Label="Nombres" InputType="InputType.Text" For="@(() => RegisterUserForm.FirstName)" Immediate="true" />
+            <MudTextField @bind-Value="RegisterUserForm.LastName" Label="Apellidos" InputType="InputType.Text" For="@(() => RegisterUserForm.LastName)" Immediate="true" />
+            <MudText Typo="Typo.body2">Se enviará un correo a esta dirección, por favor verifica tu bandeja de correos no deseados o spam si no aparece en la bandeja de entrada</MudText>
+            <MudButton Variant="Variant.Text" OnClick="@GoToReset">Pulsa aquí si ya tienes tu codigo.</MudButton>
+        </MudCardContent>
+    </MudForm>
+    <MudCardActions>
+        <MudIconButton Variant="Variant.Filled" Class="ml-auto" Color="Color.Primary" DisableElevation="true" OnClick="Registrar">Crear Cuenta</MudIconButton>
+    </MudCardActions>
+</MudCard>
+
+@code {
+    string Email = "";
+    bool Success;
+    string[] Errors = { };
+    string Contrasena = "";
+    MudForm Form;
+
+
+}

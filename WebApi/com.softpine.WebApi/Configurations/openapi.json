@@ -1,0 +1,11 @@
+{
+  "SwaggerSettings": {
+    "Enable": true,
+    "Title": ".NET 6.0 WebAPI - Muvany",
+    "Version": "v1",
+    "Description": "Muvany administra y envía documentos y paquetes en todo el mundo",
+    "ContactName": "Softpine Solutions",
+    "ContactEmail": "softpineltd@gmail.com",
+    "ContactUrl": "+1-809-779-7708"
+  }
+}
